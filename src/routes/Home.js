@@ -1,7 +1,8 @@
-import { addDoc, getDocs, collection } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { dbService } from "../fBase";
 import { onSnapshot } from "firebase/firestore";
+import Tweet from "component/Tweet";
 
 const Home = ({ userObj }) => {
   const [tweet, setTweet] = useState("");
@@ -56,9 +57,11 @@ const Home = ({ userObj }) => {
       </form>
       <div>
         {tweets.map((tweet) => (
-          <div key={tweet.id}>
-            <h4>{tweet.text}</h4>
-          </div>
+          <Tweet
+            key={tweet.id}
+            tweetObj={tweet}
+            isOwner={tweet.creatorId === userObj.uid} // 오마가쉬,,,,,!! boolean값을 넘긴다.
+          />
         ))}
       </div>
     </div>
