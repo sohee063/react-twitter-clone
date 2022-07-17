@@ -11,18 +11,31 @@ function App() {
       if (user) {
         // setIsLoggedIn(true);
         // setInit(true);
-        setUserObj(user);
+        setUserObj({
+          displayName: user.displayName,
+          uid: user.uid,
+          updateProfile: (args) => user.updateProfile(args),
+        });
       }
+
       // else {
       //   setIsLoggedIn(false);
       // }
       setInit(true);
     });
   }, []);
+  const refreshUser = () => {
+    const user = auth.getAuth().currentUser;
+    setUserObj({ ...user });
+  };
   return (
     <div>
       {init ? (
-        <Router isLoggedIn={Boolean(userObj)} userObj={userObj} />
+        <Router
+          refreshUser={refreshUser}
+          isLoggedIn={Boolean(userObj)}
+          userObj={userObj}
+        />
       ) : (
         "Initializing..."
       )}
