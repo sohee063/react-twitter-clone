@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Router from "./Router";
 import { auth } from "../fBase";
+import { updateProfile } from "firebase/auth";
 
 function App() {
   const [init, setInit] = useState(false);
@@ -14,8 +15,11 @@ function App() {
         setUserObj({
           displayName: user.displayName,
           uid: user.uid,
-          updateProfile: (args) => user.updateProfile(args),
+          updateProfile: (args) =>
+            updateProfile(user, { displayName: user.displayName }),
         });
+      } else {
+        setUserObj(null);
       }
 
       // else {
@@ -25,9 +29,11 @@ function App() {
     });
   }, []);
   const refreshUser = () => {
-    const user = auth.getAuth().currentUser;
+    const user = auth.currentUser;
     setUserObj({ ...user });
+    setUserObj(user);
   };
+
   return (
     <div>
       {init ? (

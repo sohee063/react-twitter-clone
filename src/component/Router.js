@@ -5,7 +5,7 @@ import Home from "../routes/Home";
 import Navigation from "./Navigation";
 import Profile from "../routes/Profile";
 
-const Router = ({ isLoggedIn, userObj, refreshUser }) => {
+const Router = ({ isLoggedIn, userObj, refreshUser, newName }) => {
   return (
     <div>
       {isLoggedIn && <Navigation userObj={userObj} />}
@@ -15,7 +15,13 @@ const Router = ({ isLoggedIn, userObj, refreshUser }) => {
             <Route path="/" element={<Home userObj={userObj} />} />
             <Route
               path="/profile"
-              element={<Profile userObj={userObj} refreshUser={refreshUser} />}
+              element={
+                <Profile
+                  userObj={userObj}
+                  refreshUser={refreshUser}
+                  newName={newName}
+                />
+              }
             />
           </>
         ) : (
